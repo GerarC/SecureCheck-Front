@@ -1,0 +1,13 @@
+{
+	"arrowParens": "always",
+	"htmlWhitespaceSensitivity": "css",
+	"printWidth": 80,
+	"proseWrap": "preserve",
+	"quoteProps": "as-needed",
+	"requirePragma": false,
+	"semi": false,
+	"tabWidth": 4,
+	"trailingComma": "es5",
+	"useTabs": false,
+	"parser": "typescript"
+}
