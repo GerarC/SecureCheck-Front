@@ -1,23 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import Home from "./pages/home/Home";
+import List from "./pages/list/List";
+import Login from "./pages/login/Login";
+import Single from "./pages/single/Single";
+import New from "./pages/new/New";
+import Auditoriarapida from "./pages/auditoriarapida/Auditoriarapida";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/">
+              <Route index element={<Home />} />
+              <Route path="login" element={<Login />} />
+              <Route path="auditoria" element={<Auditoriarapida />} />
+              <Route path="empresas">
+                <Route index element={<List />} />
+                <Route path=":empresanit" element={<Single />} />
+                <Route path="new" element={<New />} />
+              
+            </Route>
+            
+          </Route>
+
+          </Routes>
+        </BrowserRouter>
     </div>
   );
 }

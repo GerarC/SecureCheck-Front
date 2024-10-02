@@ -1,0 +1,69 @@
+/* empresastable.scss */
+.empresastable {
+  height: 600px;
+  padding: 20px;
+
+  .empresastableTitle {
+    width: 100%;
+    font-size: 24px;
+    color: gray;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .link {
+      text-decoration: none;
+      color: green;
+      font-size: 16px;
+      font-weight: 400;
+      border: 1px solid green;
+      padding: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
+
+  .cellAction {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+
+    &.auditar {
+      background-color: rgba(0, 128, 0, 0.05);
+      color: green;
+    }
+
+    &.activa {
+      background-color: rgba(255, 217, 0, 0.05);
+      color: goldenrod;
+    }
+
+    &.finalizada {
+      background-color: rgba(255, 0, 0, 0.05);
+      color: crimson;
+    }
+  }
+
+  .cellDelete {
+    display: flex;
+    justify-content: center; 
+    align-items: center;     
+    height: 100%;           
+    
+    .deleteButton {
+      background-color: rgba(255, 0, 0, 0.05);
+      color: crimson;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      text-align: center;
+      line-height: 1;  
+      border: 1px  rgba(220, 20, 60, 0.6);
+    }
+  }
+}
+
