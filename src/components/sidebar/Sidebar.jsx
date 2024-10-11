@@ -15,20 +15,22 @@ const Sidebar = () => {
         <ul>
           <p className="title"> </p>
           <li>
-            <DashboardIcon className="icon"/>
-            <span>Dashboard</span>
+            <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+              <DashboardIcon className="icon"/>
+              <span>Dashboard</span>
+             </Link> 
           </li>
           <p className="title"> </p>
           <li>
             <Link to="/empresas" style={{ textDecoration: "none", color: "inherit" }}>
-              <BusinessOutlinedIcon className="icon"/>
-              <span>Empresas</span>
+              <GradingOutlinedIcon className="icon"/>
+              <span>Auditar Empresas</span>
             </Link>
           </li>
-          <li>
-              <GradingOutlinedIcon className="icon"/>
+          {/*<li>
+              <BusinessOutlinedIco className="icon"/>
               <span>Nueva Auditoria</span>
-          </li>
+          </li>*/}
           <li>
             <ExitToAppOutlinedIcon className="icon"/>
             <span>Logout</span>

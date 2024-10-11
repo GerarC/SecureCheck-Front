@@ -1,4 +1,3 @@
-// Datatable.jsx
 import React from "react";
 import {
   Accordion,
@@ -15,10 +14,13 @@ import {
   FormControlLabel,
   TextField,
   Paper,
-  Typography
+  Typography,
+  Button
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { controlsData } from "../../controlsData"; // Import the data
+import { controlsData } from "../../controlsData";
+import "./datatable.scss";
+ // Import the data
 
 const Datatable = () => {
   return (
@@ -63,11 +65,11 @@ const Datatable = () => {
                           variant="outlined"
                           size="small"
                           defaultValue={control.comment}
-                          multiline // This allows the text to wrap onto a new line
-                          rows={7} // You can adjust this value to set the initial height of the text field
-                          fullWidth // Ensures it takes the full width of the column
+                          multiline
+                          rows={7}
+                          fullWidth
                           InputProps={{
-                            style: { fontSize: '14px' }, // Modify this size to your preference
+                            style: { fontSize: '14px' },
                           }}
                         />
                       </TableCell>
@@ -79,10 +81,17 @@ const Datatable = () => {
           </AccordionDetails>
         </Accordion>
       ))}
+      <div className="button-container">
+        <Button variant="contained" className="save-button">
+          Guardar
+        </Button>
+        <Button variant="contained" className="send-button">
+          Enviar y Finalizar
+        </Button>
+      </div>
     </div>
   );
 };
 
 export default Datatable;
-
 

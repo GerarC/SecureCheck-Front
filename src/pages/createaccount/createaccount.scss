@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 
-.login-container {
+.create-account-container {
   font-family: "Poppins", sans-serif;
   min-height: 100vh;
   display: flex;
@@ -15,8 +15,8 @@
     box-sizing: border-box;
   }
 
-  .login-content {
-    max-width: 450px;
+  .create-account-content {
+    max-width: 500px;
     width: 100%;
     background: #fff;
     padding: 40px;
@@ -41,7 +41,7 @@
     }
   }
 
-  .login-form {
+  .create-account-form {
     width: 100%;
 
     .title {
@@ -93,24 +93,9 @@
 
       svg {
         position: absolute;
+        left: 5px;
         color: #6439ff;
         font-size: 17px;
-      }
-    }
-
-    .text {
-      font-size: 14px;
-      font-weight: 500;
-      color: #333;
-      margin-top: 15px;
-
-      a {
-        text-decoration: none;
-        color: #6439ff;
-
-        &:hover {
-          text-decoration: underline;
-        }
       }
     }
 
@@ -131,9 +116,21 @@
       }
     }
 
-    .sign-up-text {
+    .sign-in-text {
       text-align: center;
       margin-top: 25px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #333;
+
+      a {
+        text-decoration: none;
+        color: #6439ff;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
   }
 }

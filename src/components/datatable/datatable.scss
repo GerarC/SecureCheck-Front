@@ -2,10 +2,26 @@
   margin: 20px;
 
   .MuiAccordion-root {
-    margin-bottom: 10px;
+    margin-bottom: 1px;
   }
 
   .MuiTable-root {
     min-width: 650px;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: flex-start; /* Align buttons to the left */
+    gap: 50px; /* Add space between the buttons */
+    margin-top: 20px; /* Space below the table */
+  }
+
+  .save-button, .send-button {
+    background-color: #6439ff; /* Set button color */
+    color: white; /* Ensure text is white for contrast */
+  }
+
+  .send-button {
+    background-color: #6439ff; /* Set button color */
   }
 }
