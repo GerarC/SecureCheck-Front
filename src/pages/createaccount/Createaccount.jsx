@@ -1,4 +1,3 @@
-import React from 'react';
 import { User, Mail, Lock, Calendar, CreditCard } from 'lucide-react';
 import "./createaccount.scss";
 

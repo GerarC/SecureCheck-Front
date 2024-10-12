@@ -1,8 +1,6 @@
-import React from 'react';
 import './sidebar.scss';
 import { Link } from 'react-router-dom';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import BusinessOutlinedIcon from '@mui/icons-material/BusinessOutlined';
 import GradingOutlinedIcon from '@mui/icons-material/GradingOutlined';
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
 

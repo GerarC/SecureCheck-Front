@@ -11,7 +11,6 @@ const Home = () => {
         home container
       </div>
     </div>
-
   )
 }
 
