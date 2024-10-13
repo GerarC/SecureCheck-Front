@@ -1,29 +1,40 @@
 import { Route, Routes } from "react-router-dom";
-import Home from "../pages/home/Home"
+import Home from "../pages/auditor/home/Home"
 import Login from "../pages/login/Login";
-import CreateAccount from "../pages/createaccount/Createaccount";
-import Auditoriarapida from "../pages/auditoriarapida/Auditoriarapida";
-import List from "../pages/list/List";
-import Single from "../pages/single/Single";
-import New from "../pages/new/New";
+import CreateAccount from "../pages/auditor/createaccount/Createaccount";
+import Auditoriarapida from "../pages/auditor/auditoriarapida/Auditoriarapida";
+import List from "../pages/auditor/list/List";
+import Single from "../pages/auditor/single/Single";
+import New from "../pages/auditor/new/New";
+import { AuthenticationProvider } from "../provider/authentication-provider";
+import ProtectedRoute from "./protected-routes";
+import ROLES from "../utils/roles";
+import Auditor from "../pages/auditor/Auditor";
 
 
 function Routing() {
-  return (
-    <Routes>
-      <Route path="/">
-        <Route index element={<Home />} />
-        <Route path="login" element={<Login />} />
-        <Route path="crearcuenta" element={<CreateAccount />} />
-        <Route path="auditoria" element={<Auditoriarapida />} />
-        <Route path="empresas">
-          <Route index element={<List />} />
-          <Route path=":empresanit" element={<Single />} />
-          <Route path="new" element={<New />} />
-        </Route>
-      </Route>
-    </Routes>
-  );
+	return (
+		<AuthenticationProvider>
+			<Routes>
+				<Route path="/login" element={<Login />} />
+				<Route path="/" element={<Login />} />
+				<Route path="/register" element={<Login />} />
+				<Route path="/auditor"
+					element={<ProtectedRoute allowedRoles={[ROLES.auditor, ROLES.admin]}>
+						<Auditor />
+					</ProtectedRoute>}>
+					<Route index element={<Home />} />
+					<Route path="crearcuenta" element={<CreateAccount />} />
+					<Route path="auditoria" element={<Auditoriarapida />} />
+					<Route path="empresas">
+						<Route index element={<List />} />
+						<Route path=":empresanit" element={<Single />} />
+						<Route path="new" element={<New />} />
+					</Route>
+				</Route>
+			</Routes>
+		</AuthenticationProvider>
+	);
 }
 
 export default Routing;

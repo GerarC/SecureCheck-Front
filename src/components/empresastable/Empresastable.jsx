@@ -60,7 +60,7 @@ const Empresastable = () => {
     <div className="empresastable">
       <div className="empresastableTitle">
         Empresas
-        <Link to="/empresas/new" className="link">
+        <Link to="/auditor/empresas/new" className="link">
           Agregar nueva empresa
         </Link>
       </div>

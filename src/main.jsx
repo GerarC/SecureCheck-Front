@@ -5,8 +5,8 @@ import Routing from './router/router'
 
 createRoot(document.getElementById('root')).render(
 	<StrictMode>
-		<BrowserRouter>
-			<Routing />
-		</BrowserRouter>
+			<BrowserRouter>
+				<Routing />
+			</BrowserRouter>
 	</StrictMode>
 )
