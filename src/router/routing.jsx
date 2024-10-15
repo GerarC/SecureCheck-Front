@@ -2,7 +2,6 @@ import { Route, Routes } from "react-router-dom";
 import Home from "../pages/auditor/home/Home"
 import Login from "../pages/login/Login";
 import CreateAccount from "../pages/auditor/createaccount/Createaccount";
-import Auditoriarapida from "../pages/auditor/auditoriarapida/Auditoriarapida";
 import List from "../pages/auditor/list/List";
 import Single from "../pages/auditor/single/Single";
 import New from "../pages/auditor/new/New";
@@ -10,6 +9,7 @@ import { AuthenticationProvider } from "../provider/authentication-provider";
 import ProtectedRoute from "./protected-routes";
 import ROLES from "../utils/roles";
 import Auditor from "../pages/auditor/Auditor";
+import Audit from "../pages/auditor/audit/audit";
 
 
 function Routing() {
@@ -25,7 +25,7 @@ function Routing() {
 					</ProtectedRoute>}>
 					<Route index element={<Home />} />
 					<Route path="crearcuenta" element={<CreateAccount />} />
-					<Route path="auditoria" element={<Auditoriarapida />} />
+					<Route path="auditoria/:id" element={<Audit />} />
 					<Route path="empresas">
 						<Route index element={<List />} />
 						<Route path=":empresanit" element={<Single />} />

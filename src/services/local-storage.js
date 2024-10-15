@@ -11,7 +11,6 @@ const localStorageService = {
 			if (value !== undefined && value !== null) {
 				const jsonValue = JSON.stringify(value);
 				localStorage.setItem(key, jsonValue);
-				console.log(key, value, jsonValue)
 			}
 		} catch (error) {
 			console.error(LOCAL_STORAGE_SAVING_ERROR_MESSAGE, error);
@@ -21,7 +20,8 @@ const localStorageService = {
 	getItem: (key) => {
 		try {
 			const value = localStorage.getItem(key);
-			return value ? JSON.parse(value) : null;
+			const jsonValue = JSON.parse(value);
+			return  jsonValue;
 		} catch (error) {
 			console.error(LOCAL_STORAGE_READING_ERROR_MESSAGE, error);
 			return null;

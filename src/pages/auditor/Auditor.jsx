@@ -5,11 +5,13 @@ import './auditor.scss'
 
 const Auditor = () => {
 	return (
-		<div className="auditor">
-			<Sidebar />
-			<div className="auditorContainer">
-				<Navbar />
-				<Outlet />
+		<div className="main-container">
+			<Navbar />
+			<div className="view-container">
+				<Sidebar />
+				<div className="view">
+					<Outlet />
+				</div>
 			</div>
 		</div>
 	)

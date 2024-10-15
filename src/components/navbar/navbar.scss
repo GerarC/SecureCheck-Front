@@ -1,10 +1,22 @@
 .navbar {
-  height: 50px;
+  flex: 0.2;
   border-bottom: 0.5px solid rgb(231, 228, 228);
   display: flex;
   align-items: center;
   font-size: 14px;
   color: #555;
+
+	.top {
+		display: flex;
+		width: 25%;
+		margin-left: 1%;
+
+		.logo {
+			font-size: 20px;
+			font-weight: bold;
+			color: #6439ff;
+		}
+	}
 
   .wrapper {
     width: 100%;
