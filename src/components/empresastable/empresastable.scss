@@ -1,6 +1,8 @@
 /* empresastable.scss */
 .empresastable {
   padding: 20px;
+  display: flex;
+  flex-direction: column;
   position: relative;
   width: 80vw;
 
@@ -22,29 +24,6 @@
       padding: 5px;
       border-radius: 5px;
       cursor: pointer;
-    }
-  }
-
-  .cellAction {
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
-
-    &.auditar {
-      background-color: rgba(0, 128, 0, 0.05);
-      color: green;
-    }
-
-    &.activa {
-      background-color: rgba(255, 217, 0, 0.05);
-      color: goldenrod;
-    }
-
-    &.finalizada {
-      background-color: rgba(255, 0, 0, 0.05);
-      color: crimson;
     }
   }
 

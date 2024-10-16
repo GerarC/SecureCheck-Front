@@ -5,11 +5,36 @@ import formService from "../../../services/api/form-service";
 import auditService from "../../../services/api/audit-service";
 import { HAS_NOT_ACTIVE_MESSAGE } from "../../../utils/constants/auditor-constants";
 import { enqueueSnackbar } from "notistack";
-import { Backdrop, CircularProgress } from "@mui/material";
+import { Backdrop, Button, CircularProgress } from "@mui/material";
 
 function Audit() {
     const [form, setForm] = useState({});
     const { id } = useParams();
+
+    const [changedAnswers, setChangedAnswers] = useState([]);
+
+    function handleChangeAnswer(answer) {
+        let newChangedAnswers = changedAnswers;
+        let foundIndex;
+        if (
+            !newChangedAnswers.find((item, index) => {
+                if (item.id === answer.id) {
+                    foundIndex = index;
+                    return true;
+                }
+                return false;
+            })
+        ) {
+            newChangedAnswers.push(answer);
+        } else {
+            newChangedAnswers[foundIndex] = answer;
+            setChangedAnswers(newChangedAnswers);
+        }
+    }
+
+    function handleOnSaveChangesClick() {
+        console.debug(changedAnswers);
+    }
 
     const retry = useCallback(
         (response) => {
@@ -34,6 +59,7 @@ function Audit() {
                 else if (response.status === 409)
                     response.json().then((error) => {
                         if (error.message.includes(HAS_NOT_ACTIVE_MESSAGE)) {
+                            enqueueSnackbar();
                             auditService.createAudit({ companyId: id }).then(retry);
                         }
                     });
@@ -46,7 +72,15 @@ function Audit() {
     return (
         <>
             {form ? (
-                <Datatable controlsData={form.domains} />
+                <>
+                    <Datatable
+                        form={form.domains}
+                        handleChangeAnswer={handleChangeAnswer}
+                    />
+                    <Button sx={{ ml: 3 }} onClick={() => handleOnSaveChangesClick()}>
+                        Guardar Cambios
+                    </Button>
+                </>
             ) : (
                 <Backdrop sx={{ color: "#fff", zIndex: 30 }} open={true}>
                     <CircularProgress size={100} />

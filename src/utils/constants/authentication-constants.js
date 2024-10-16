@@ -1,1 +1,1 @@
-export const UNDEFINED_LOCAL_USER_MESSAGE = "Local user doesn't exists, Login again"
+export const UNDEFINED_LOCAL_USER_MESSAGE = "There's not information about user locally, please log in"

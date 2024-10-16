@@ -31,6 +31,7 @@ const Auditor = () => {
             },
         },
     ];
+
     return (
         <Box className="main-container">
             <Navbar handleMenu={() => setAsideOpen(!asideOpen)} />

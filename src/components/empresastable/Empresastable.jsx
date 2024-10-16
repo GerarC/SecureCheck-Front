@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./empresastable.scss";
 import { DataGrid } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
 const Empresastable = ({ rows, deleteCompany, auditCompany }) => {
     const [data, setData] = useState(rows);
@@ -22,15 +22,21 @@ const Empresastable = ({ rows, deleteCompany, auditCompany }) => {
     };
 
     const columns = [
-        { field: "nit", headerName: "NIT", width: 120 },
-        { field: "name", headerName: "Nombre", width: 300 },
-        { field: "address", headerName: "Dirección", width: 300 },
-        { field: "contactEmail", headerName: "Correo Electrónico", width: 300 },
-        { field: "contactPhone", headerName: "Teléfono", width: 150 },
+        { field: "nit", headerName: "NIT", flex: 0.4, minWidth: 100 },
+        { field: "name", headerName: "Nombre", flex: 1, minWidth: 150 },
+        { field: "address", headerName: "Dirección", flex: 1, minWidth: 150 },
+        {
+            field: "contactEmail",
+            headerName: "Correo Electrónico",
+            flex: 1,
+            minWidth: 150,
+        },
+        { field: "contactPhone", headerName: "Teléfono", flex: 0.5, minWidth: 150 },
         {
             field: "action",
             headerName: "Acciones",
-            width: 200,
+            flex: 0.7,
+            minWidth: 150,
             renderCell: (params) => (
                 <div className="cell">
                     <Button
@@ -51,7 +57,10 @@ const Empresastable = ({ rows, deleteCompany, auditCompany }) => {
     ];
 
     return (
-        <div className="empresastable">
+        <Box
+            sx={{ flexGrow: 1, display: "flex", width: "100%" }}
+            className="empresastable"
+        >
             <div className="empresastableTitle">
                 Empresas
                 <Link to="/auditor/empresas/new" className="link">
@@ -59,12 +68,13 @@ const Empresastable = ({ rows, deleteCompany, auditCompany }) => {
                 </Link>
             </div>
             <DataGrid
+                sx={{ width: "100%" }}
                 rows={data}
                 columns={columns}
                 getRowId={(row) => row.id}
                 hideFooterPagination
             />
-        </div>
+        </Box>
     );
 };
 

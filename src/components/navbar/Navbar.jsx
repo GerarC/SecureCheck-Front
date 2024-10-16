@@ -13,6 +13,8 @@ const Navbar = ({ handleMenu }) => {
                 justifyContent: "center",
                 textJustify: "center",
             }}
+            color="primary"
+            enableColorOnDark
         >
             <Toolbar>
                 <IconButton

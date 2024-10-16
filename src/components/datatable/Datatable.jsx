@@ -27,22 +27,36 @@ import { useEffect, useState } from "react";
 import { Add, Delete } from "@mui/icons-material";
 import { Edit } from "lucide-react";
 
-const Datatable = ({ controlsData }) => {
-    const [formData, setFormData] = useState(controlsData);
+const Datatable = ({ form, handleChangeAnswer }) => {
+    const [formData, setFormData] = useState(form);
 
     useEffect(() => {
-        setFormData(controlsData);
-    }, [controlsData]);
+        setFormData(form);
+    }, [form]);
+
+    function handleFormAnswerChange(domainIndex, controlIndex, validControl) {
+        const newForm = formData;
+        newForm[domainIndex].controls[controlIndex].answer.done =
+            validControl === "yes" ? true : false;
+        handleChangeAnswer(newForm[domainIndex].controls[controlIndex].answer);
+        setFormData(newForm);
+    }
+
+    function handleFormCommentChange(domainIndex, controlIndex, comment) {
+        const newForm = formData;
+        newForm[domainIndex].controls[controlIndex].answer.comment = comment;
+        handleChangeAnswer(newForm[domainIndex].controls[controlIndex].answer);
+        setFormData(newForm);
+    }
 
     return (
         <div className="datatable">
             {formData ? (
-                formData.map((domain) => (
+                formData.map((domain, domainIndex) => (
                     <Accordion key={domain.id}>
                         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                            <Typography>{domain.name}</Typography>
+                            <Typography><strong>{domain.index}.</strong> {domain.name}</Typography>
                         </AccordionSummary>
-
                         <AccordionDetails>
                             <TableContainer component={Paper}>
                                 <Table>
@@ -65,9 +79,9 @@ const Datatable = ({ controlsData }) => {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {domain.controls.map((control) => (
+                                        {domain.controls.map((control, controlIndex) => (
                                             <TableRow key={control.id}>
-                                                <TableCell>{control.index}</TableCell>
+                                                <TableCell>{domain.index}.{control.index}</TableCell>
                                                 <TableCell>{control.name}</TableCell>
                                                 <TableCell>{control.description}</TableCell>
                                                 <TableCell>
@@ -100,14 +114,26 @@ const Datatable = ({ controlsData }) => {
                                                     </Button>
                                                 </TableCell>
                                                 <TableCell>
-                                                    <RadioGroup row>
+                                                    <RadioGroup
+                                                        defaultValue={control.answer.done ? "yes" : "not"}
+                                                        id="isValidControl"
+                                                        onChange={(e) => {
+                                                            handleFormAnswerChange(
+                                                                domainIndex,
+                                                                controlIndex,
+                                                                e.target.value,
+                                                            );
+                                                        }}
+                                                        row
+                                                    >
                                                         <FormControlLabel
-                                                            value="Si"
+                                                            id=""
+                                                            value="yes"
                                                             control={<Radio />}
                                                             label="Si"
                                                         />
                                                         <FormControlLabel
-                                                            value="No"
+                                                            value="not"
                                                             control={<Radio />}
                                                             label="No"
                                                         />
@@ -117,12 +143,19 @@ const Datatable = ({ controlsData }) => {
                                                     <TextField
                                                         variant="outlined"
                                                         size="small"
-                                                        defaultValue={control.comment}
+                                                        defaultValue={control.answer.comment}
                                                         multiline
                                                         rows={7}
                                                         sx={{
                                                             fontSize: "14px",
                                                         }}
+                                                        onChange={(e) =>
+                                                            handleFormCommentChange(
+                                                                domainIndex,
+                                                                controlIndex,
+                                                                e.target.value,
+                                                            )
+                                                        }
                                                     />
                                                 </TableCell>
                                             </TableRow>
