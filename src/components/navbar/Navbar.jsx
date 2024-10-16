@@ -1,41 +1,48 @@
 import "./navbar.scss";
-import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
-
-import FullscreenExitOutlinedIcon from "@mui/icons-material/FullscreenExitOutlined";
-import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
-import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material";
+import { MenuIcon } from "lucide-react";
 
-const Navbar = () => {
+const Navbar = ({ handleMenu }) => {
     return (
-        <div className="navbar">
-            <div className="top">
-                <span className="logo">Centro Auditor</span>
-            </div>
-            <div className="wrapper">
-                <div className="items">
-                    <div className="item">
-                        <LanguageOutlinedIcon className="icon" />
-                        English
-                    </div>
-
-                    <div className="item">
-                        <FullscreenExitOutlinedIcon className="icon" />
-                    </div>
-                    <div className="item">
-                        <NotificationsNoneOutlinedIcon className="icon" />
-                        <div className="counter">1</div>
-                    </div>
-                    <div className="item">
-                        <ChatBubbleOutlineOutlinedIcon className="icon" />
-                        <div className="counter">2</div>
-                    </div>
-                    <div className="item">
-                        <AccountBoxIcon className="icon" />
-                    </div>
-                </div>
-            </div>
-        </div>
+        <AppBar
+            position="fixed"
+            sx={{
+                justifyItems: "center",
+                zIndex: (theme) => theme.zIndex.drawer + 1,
+                justifyContent: "center",
+                textJustify: "center",
+            }}
+        >
+            <Toolbar>
+                <IconButton
+                    size="large"
+                    edge="start"
+                    color="inherit"
+                    aria-label="menu"
+                    sx={{ mr: 1 }}
+                    onClick={() => handleMenu()}
+                >
+                    <MenuIcon />
+                </IconButton>
+                <Typography
+                    variant="h5"
+                    component="div"
+                    sx={{
+                        flexGrow: 1,
+                        display: { xs: "none", md: "flex" },
+                        fontFamily: "monospace",
+                        fontWeight: 700,
+                        textDecoration: "none",
+                    }}
+                >
+                    SecureCheck
+                </Typography>
+                <Box>
+                    <AccountBoxIcon />
+                </Box>
+            </Toolbar>
+        </AppBar>
     );
 };
 

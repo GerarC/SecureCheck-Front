@@ -1,48 +1,55 @@
 import "./sidebar.scss";
-import { Link } from "react-router-dom";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import GradingOutlinedIcon from "@mui/icons-material/GradingOutlined";
-import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
-import localStorageService from "../../services/local-storage";
+import {
+    Drawer,
+    List,
+    ListItem,
+    ListItemButton,
+    ListItemIcon,
+    ListItemText,
+    Toolbar,
+} from "@mui/material";
+import { SIDEBAR_WIDTH } from "../../utils/constants/auditor-constants";
 
-const Sidebar = () => {
-    function handleLogOutClick() {
-        localStorageService.clear();
-    }
-
+const Sidebar = ({ open = true, items }) => {
     return (
-        <div className="sidebar">
-            <div className="center">
-                <ul>
-                    <p className="title"> </p>
-                    <li>
-                        <Link
-                            to="/auditor"
-                            style={{ textDecoration: "none", color: "inherit" }}
-                        >
-                            <DashboardIcon className="icon" />
-                            <span>Dashboard</span>
-                        </Link>
-                    </li>
-                    <p className="title"> </p>
-                    <li>
-                        <Link
-                            to="/auditor/empresas"
-                            style={{ textDecoration: "none", color: "inherit" }}
-                        >
-                            <GradingOutlinedIcon className="icon" />
-                            <span>Auditar Empresas</span>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="/" onClick={handleLogOutClick}>
-                            <ExitToAppOutlinedIcon className="icon" />
-                            <span>Logout</span>
-                        </Link>
-                    </li>
-                </ul>
-            </div>
-        </div>
+        <Drawer
+            variant="persistent"
+            open={open}
+            sx={{
+                width: SIDEBAR_WIDTH,
+                zIndex: 2,
+                flexShrink: 0,
+                [`& .MuiDrawer-paper`]: {
+                    width: SIDEBAR_WIDTH,
+                    boxSizing: "border-box",
+                    zIndex: 2,
+                },
+            }}
+        >
+            <Toolbar />
+            <List>
+                {items ? (
+                    items.map((item, index) => (
+                        <ListItem disablePadding key={index}>
+                            <ListItemButton onClick={() => item.function()}>
+                                <ListItemIcon>{item.icon}</ListItemIcon>
+                                <ListItemText primary={item.text} />
+                            </ListItemButton>
+                        </ListItem>
+                    ))
+                ) : (
+                    <ListItem disablePadding>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <DashboardIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Dashboard" />
+                        </ListItemButton>
+                    </ListItem>
+                )}
+            </List>
+        </Drawer>
     );
 };
 

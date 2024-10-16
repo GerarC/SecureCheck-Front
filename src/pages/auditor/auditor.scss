@@ -4,17 +4,3 @@
 	width: 100vw;
 	height: 100vh
 }
-
-.view-container {
-	display: flex;
-	width: 100%;
-	height: 92vh;
-
-	.sidebar {
-		flex: 0.4;
-	}
-
-	.view {
-		flex: 1.6;
-	}
-}
