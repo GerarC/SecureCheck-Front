@@ -1,9 +1,11 @@
+import { useTheme } from "@emotion/react";
 import "./navbar.scss";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material";
 import { MenuIcon } from "lucide-react";
 
 const Navbar = ({ handleMenu }) => {
+    const theme = useTheme();
     return (
         <AppBar
             position="fixed"
@@ -12,8 +14,9 @@ const Navbar = ({ handleMenu }) => {
                 zIndex: (theme) => theme.zIndex.drawer + 1,
                 justifyContent: "center",
                 textJustify: "center",
+                backgroundColor: theme.palette.background.main,
+                color: theme.palette.success.main,
             }}
-            color="primary"
             enableColorOnDark
         >
             <Toolbar>

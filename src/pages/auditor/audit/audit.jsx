@@ -36,6 +36,18 @@ function Audit() {
         console.debug(changedAnswers);
     }
 
+    async function editQuestion(questionId, body) {
+        return true;
+    }
+
+    async function addQuestion(controlId, body) {
+        return { id: controlId + Date.now().valueOf, body };
+    }
+
+    async function deleteQuestion(questionId) {
+        return true;
+    }
+
     const retry = useCallback(
         (response) => {
             if (response.ok)
@@ -76,6 +88,9 @@ function Audit() {
                     <Datatable
                         form={form.domains}
                         handleChangeAnswer={handleChangeAnswer}
+                        editQuestion={editQuestion}
+                        addQuestion={addQuestion}
+                        deleteQuestion={deleteQuestion}
                     />
                     <Button sx={{ ml: 3 }} onClick={() => handleOnSaveChangesClick()}>
                         Guardar Cambios

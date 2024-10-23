@@ -1,4 +1,4 @@
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, useTheme } from "@mui/material";
 import "./new.scss";
 import localStorageService from "../../../services/local-storage";
 import { LOCAL_STORAGE_USER_KEY } from "../../../utils/constants/local-storage-constants";
@@ -8,6 +8,7 @@ import { enqueueSnackbar } from "notistack";
 
 const New = () => {
     const redirect = useNavigate();
+    const theme = useTheme();
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -56,7 +57,16 @@ const New = () => {
                                 className="formInput"
                                 label="Teléfono de contacto"
                             />
-                            <Button type="submit">Guardar empresa</Button>
+                            <Button
+                                sx={{
+                                    color: "white",
+                                    backgroundColor: theme.palette.primary.main,
+                                }}
+                                variant="outlined"
+                                type="submit"
+                            >
+                                Guardar empresa
+                            </Button>
                         </form>
                     </div>
                 </div>

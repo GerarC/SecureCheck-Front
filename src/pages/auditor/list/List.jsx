@@ -48,6 +48,7 @@ const List = () => {
             rows={companies}
             deleteCompany={deleteCompany}
             auditCompany={navigateAudit}
+            addButtonFunction={() => navigate("/auditor/empresas/new")}
         />
     );
 };

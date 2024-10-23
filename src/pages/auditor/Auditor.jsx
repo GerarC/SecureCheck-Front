@@ -3,28 +3,33 @@ import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import "./auditor.scss";
 import { useState } from "react";
-import { Dashboard, Logout, Work } from "@mui/icons-material";
+import { Logout, SpaceDashboard, Work } from "@mui/icons-material";
 import localStorageService from "../../services/local-storage";
-import { Box, Toolbar, styled } from "@mui/material";
+import { Box, Toolbar, styled, useTheme } from "@mui/material";
 import { SIDEBAR_WIDTH } from "../../utils/constants/auditor-constants";
 
 const Auditor = () => {
+    const theme = useTheme()
     const redirect = useNavigate();
     const [asideOpen, setAsideOpen] = useState(true);
     const asideItems = [
         {
             text: "Dashboard",
-            icon: <Dashboard />,
+            icon: (
+                <SpaceDashboard
+                    sx={{ color: theme.palette.background.main }}
+                />
+            ),
             function: () => redirect("/auditor"),
         },
         {
             text: "Empresas",
-            icon: <Work />,
+            icon: <Work color="secondary"/>,
             function: () => redirect("/auditor/empresas"),
         },
         {
             text: "Logout",
-            icon: <Logout />,
+            icon: <Logout color="error" />,
             function: () => {
                 localStorageService.clear();
                 redirect("/login");
@@ -35,11 +40,11 @@ const Auditor = () => {
     return (
         <Box className="main-container">
             <Navbar handleMenu={() => setAsideOpen(!asideOpen)} />
-                <Sidebar open={asideOpen} items={asideItems} />
-                <Main open={asideOpen}>
-                <Toolbar/>
-                    <Outlet />
-                </Main>
+            <Sidebar open={asideOpen} items={asideItems} />
+            <Main open={asideOpen}>
+                <Toolbar />
+                <Outlet />
+            </Main>
         </Box>
     );
 };
@@ -67,6 +72,5 @@ const Main = styled("main", {
         },
     ],
 }));
-
 
 export default Auditor;

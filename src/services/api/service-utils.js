@@ -1,7 +1,7 @@
 import { LOCAL_STORAGE_USER_KEY } from "../../utils/constants/local-storage-constants";
 import localStorageService from "../local-storage";
 
-const api_url = import.meta.env.VITE_API_URL || "http://localhost:8099/securecheck/v1/"
+const api_url = import.meta.env.VITE_API_URL || "http://localhost:8099/securecheck/v1"
 
 export const method = {
 	get: "GET",
