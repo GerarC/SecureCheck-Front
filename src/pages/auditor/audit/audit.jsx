@@ -3,13 +3,14 @@ import Datatable from "../../../components/datatable/Datatable";
 import { useCallback, useEffect, useState } from "react";
 import formService from "../../../services/api/form-service";
 import auditService from "../../../services/api/audit-service";
-import { HAS_NOT_ACTIVE_MESSAGE } from "../../../utils/constants/auditor-constants";
+import { HAS_NOT_ACTIVE_MESSAGE, QUESTION_ADDED_MESSAGE, QUESTION_DELETED_MESSSAGE, QUESTION_UPDATED_MESSAGE } from "../../../utils/constants/auditor-constants";
 import { enqueueSnackbar } from "notistack";
 import { Backdrop, Button, CircularProgress } from "@mui/material";
+import questionService from "../../../services/api/question-service";
 
 function Audit() {
     const [form, setForm] = useState({});
-    const { id } = useParams();
+    const { id: companyId } = useParams();
 
     const [changedAnswers, setChangedAnswers] = useState([]);
 
@@ -37,22 +38,43 @@ function Audit() {
     }
 
     async function editQuestion(questionId, body) {
-        return true;
+        const response = await questionService.update(questionId, {body})
+        if(response.ok) {
+            const updatedQuestion = await response.json()
+            enqueueSnackbar(QUESTION_UPDATED_MESSAGE, {variant: "success"})
+            return updatedQuestion
+        }
+        const errorResponse = await response.json();
+        enqueueSnackbar(errorResponse.message, {variant: "error"})
     }
 
     async function addQuestion(controlId, body) {
-        return { id: controlId + Date.now().valueOf, body };
+        const response = await questionService.create({body, controlId, companyId})
+        if(response.ok) {
+            const newQuestion = await response.json()
+            enqueueSnackbar(QUESTION_ADDED_MESSAGE, {variant: "success"})
+            return newQuestion
+        }
+        const errorResponse = await response.json();
+        enqueueSnackbar(errorResponse.message, {variant: "error"})
     }
 
     async function deleteQuestion(questionId) {
-        return true;
+        const response = await questionService.delete(questionId)
+        if(response.ok) {
+            const deletedQuestion = await response.json()
+            enqueueSnackbar(QUESTION_DELETED_MESSSAGE, {variant: "success"})
+            return deletedQuestion
+        }
+        const errorResponse = await response.json();
+        enqueueSnackbar(errorResponse.message, {variant: "error"})
     }
 
     const retry = useCallback(
         (response) => {
             if (response.ok)
                 formService
-                    .getByCompany(id)
+                    .getByCompany(companyId)
                     .then((response) => {
                         if (response.ok) return response.json();
                     })
@@ -60,26 +82,26 @@ function Audit() {
                         setForm(fetchedForm);
                     });
         },
-        [id],
+        [companyId],
     );
 
     useEffect(() => {
         formService
-            .getByCompany(id)
+            .getByCompany(companyId)
             .then((response) => {
                 if (response.ok) return response.json();
                 else if (response.status === 409)
                     response.json().then((error) => {
                         if (error.message.includes(HAS_NOT_ACTIVE_MESSAGE)) {
                             enqueueSnackbar();
-                            auditService.createAudit({ companyId: id }).then(retry);
+                            auditService.createAudit({ companyId }).then(retry);
                         }
                     });
             })
             .then((fetchedForm) => {
                 setForm(fetchedForm);
             });
-    }, [id, retry]);
+    }, [companyId, retry]);
 
     return (
         <>
