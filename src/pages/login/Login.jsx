@@ -1,6 +1,5 @@
 import { Mail, Lock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import "./login.scss";
 import authService from "../../services/api/auth-service";
 import { useState } from "react";
 import localStorageService from "../../services/local-storage";
@@ -8,8 +7,11 @@ import { LOCAL_STORAGE_USER_KEY } from "../../utils/constants/local-storage-cons
 import ROLES from "../../utils/roles";
 import { useAuthentication } from "../../hooks/use-authentication";
 import { enqueueSnackbar } from "notistack";
+import { Box, Button, TextField, Typography, Container } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 const Login = () => {
+    const theme = useTheme();
     const redirect = useNavigate();
     const [userData, setUserData] = useState();
     const { login } = useAuthentication();
@@ -48,56 +50,166 @@ const Login = () => {
     }
 
     const getPathPerRole = (role) => {
-        if (role === ROLES.admin || role == ROLES.auditor) return "/auditor";
+        if (role === ROLES.admin || role === ROLES.auditor) return "/auditor";
         return "/";
     };
 
     return (
-        <div className="login-container">
-            <div className="login-content">
-                <div className="welcome-message">
-                    <h1>Bienvenido Señor(a) Auditor</h1>
-                    <p>
+        <Box
+            sx={{
+                minHeight: "100vh",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: theme.palette.background.main,
+                padding: "30px",
+                fontFamily: theme.typography.fontFamily,
+            }}
+        >
+            <Container
+                sx={{
+                    width: "25vw",
+                    minWidth: "350px",
+                    background: "#fff",
+                    padding: 4,
+                    borderRadius: 2,
+                    boxShadow: 3,
+                }}
+            >
+                <Box textAlign="center" mb={4}>
+                    <Typography variant="h4" fontWeight={600} color="#333">
+                        Bienvenido Señor(a) Auditor
+                    </Typography>
+                    <Typography variant="body1" color="#333">
                         Inicie sesión para acceder a la herramienta de auditoría ISO 27001
-                    </p>
-                </div>
-                <div className="login-form">
-                    <div className="title">Iniciar Sesión</div>
-                    <form onSubmit={handleSubmit}>
-                        <div className="input-boxes">
-                            <div className="input-box">
-                                <Mail size={20} />
-                                <input
-                                    id="email"
-                                    type="text"
-                                    placeholder="Ingrese su email"
-                                    required
-                                />
-                            </div>
-                            <div className="input-box">
-                                <Lock size={20} />
-                                <input
-                                    id="password"
-                                    type="password"
-                                    placeholder="Ingrese su contraseña"
-                                    required
-                                />
-                            </div>
-                            <div className="text">
-                                <a href="#">¿Olvidó su contraseña?</a>
-                            </div>
-                            <div className="button input-box">
-                                <input type="submit" value="Iniciar Sesión" />
-                            </div>
-                            <div className="text sign-up-text">
-                                ¿Aun no tienes cuenta?{" "}
-                                <a onClick={() => redirect("/register")}>Crear Cuenta</a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+                    </Typography>
+                </Box>
+                <form onSubmit={handleSubmit}>
+                    <Box mb={2}>
+                        <TextField
+                            id="email"
+                            type="text"
+                            placeholder="Ingrese su email"
+                            required
+                            fullWidth
+                            slotProps={{
+                                input: {
+                                    startAdornment: (
+                                        <Mail
+                                            style={{
+                                                color: theme.palette.primary.main,
+                                                marginRight: "14px",
+                                            }}
+                                        />
+                                    ),
+                                },
+                            }}
+                            sx={{
+                                height: "50px",
+                                "& .MuiOutlinedInput-root": {
+                                    "& fieldset": {
+                                        borderColor: "rgba(0, 0, 0, 0.2)",
+                                    },
+                                    "&:hover fieldset": {
+                                        borderColor: theme.palette.primary.main,
+                                    },
+                                    "&.Mui-focused fieldset": {
+                                        borderColor: theme.palette.primary.main,
+                                    },
+                                },
+                                "& .MuiInputBase-input": {
+                                    paddingLeft: "1rem",
+                                },
+                            }}
+                        />
+                    </Box>
+                    <Box mb={2}>
+                        <TextField
+                            id="password"
+                            type="password"
+                            placeholder="Ingrese su contraseña"
+                            required
+                            fullWidth
+                            slotProps={{
+                                input: {
+                                    startAdornment: (
+                                        <Lock
+                                            style={{
+                                                color: theme.palette.primary.main,
+                                                marginRight: "14px",
+                                            }}
+                                        />
+                                    ),
+                                },
+                            }}
+                            sx={{
+                                height: "50px",
+                                "& .MuiOutlinedInput-root": {
+                                    "& fieldset": {
+                                        borderColor: "rgba(0, 0, 0, 0.2)",
+                                    },
+                                    "&:hover fieldset": {
+                                        borderColor: theme.palette.primary.main,
+                                    },
+                                    "&.Mui-focused fieldset": {
+                                        borderColor: theme.palette.primary.main,
+                                    },
+                                    "& .MuiInputBase-input": {
+                                        paddingLeft: "1rem",
+                                    },
+                                },
+                            }}
+                        />
+                    </Box>
+                    <Box textAlign="right" mb={2}>
+                        <Typography variant="body2" color="#333">
+                            <a
+                                href="#"
+                                style={{
+                                    textDecoration: "none",
+                                    color: theme.palette.primary.main,
+                                    cursor: "pointer",
+                                }}
+                            >
+                                ¿Olvidó su contraseña?
+                            </a>
+                        </Typography>
+                    </Box>
+                    <Box mb={4}>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            fullWidth
+                            sx={{
+                                background: theme.palette.primary.main,
+                                color: "#fff",
+                                borderRadius: 1,
+                                "&:hover": {
+                                    background: theme.palette.warning.main,
+                                },
+                            }}
+                        >
+                            Iniciar Sesión
+                        </Button>
+                    </Box>
+                    <Box textAlign="center">
+                        <Typography variant="body2" color="#333">
+                            ¿Aun no tienes cuenta?{" "}
+                            <a
+                                onClick={() => redirect("/register")}
+                                style={{
+                                    textDecoration: "none",
+                                    color: theme.palette.primary.main,
+                                    cursor: "pointer",
+                                }}
+                            >
+                                Crear Cuenta
+                            </a>
+                        </Typography>
+                    </Box>
+                </form>
+            </Container>
+        </Box>
     );
 };
 

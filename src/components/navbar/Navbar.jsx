@@ -1,8 +1,9 @@
 import { useTheme } from "@emotion/react";
 import "./navbar.scss";
-import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material";
 import { MenuIcon } from "lucide-react";
+import Logo from "../../assets/securecheck-no-background.png"
+import { APPLICATION_NAME } from "../../utils/constants/general-constants";
 
 const Navbar = ({ handleMenu }) => {
     const theme = useTheme();
@@ -28,7 +29,7 @@ const Navbar = ({ handleMenu }) => {
                     sx={{ mr: 1 }}
                     onClick={() => handleMenu()}
                 >
-                    <MenuIcon />
+                    <img src={Logo} style={{aspectRatio: "315/375", height: "40px"}}/>
                 </IconButton>
                 <Typography
                     variant="h5"
@@ -41,10 +42,10 @@ const Navbar = ({ handleMenu }) => {
                         textDecoration: "none",
                     }}
                 >
-                    SecureCheck
+                    {APPLICATION_NAME}
                 </Typography>
                 <Box>
-                    <AccountBoxIcon />
+                    <MenuIcon/>
                 </Box>
             </Toolbar>
         </AppBar>
