@@ -6,7 +6,7 @@ const DomainAccordion = ({ domain, domainIndex, handleChangeAnswer, deleteQuesti
   return (
     <Accordion>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <Typography>
+        <Typography variant="h6" color="primary">
           <strong>{domain.index}.</strong> {domain.name}
         </Typography>
       </AccordionSummary>
