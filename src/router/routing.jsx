@@ -10,8 +10,6 @@ import Auditor from "../pages/auditor/Auditor";
 import Audit from "../pages/auditor/audit/audit";
 import CreateAccount from "../pages/createaccount/Createaccount";
 
-
-
 function Routing() {
 	return (
 		<AuthenticationProvider>
