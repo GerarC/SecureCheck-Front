@@ -1,0 +1,95 @@
+.report-container {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+
+  .report-paper {
+    padding: 2rem;
+    
+    .report-header {
+      margin-bottom: 3rem;
+
+      h4 {
+        text-align: center;
+        color: #1976d2;
+        margin-bottom: 2rem;
+      }
+    }
+
+    .info-card {
+      height: 100%;
+      background-color: #f8f9fa;
+      
+      .info-item {
+        margin-top: 1rem;
+        
+        .MuiTypography-subtitle1 {
+          margin-bottom: 0.5rem;
+        }
+      }
+    }
+
+    .dates-card {
+      margin-top: 2rem;
+      background-color: #e3f2fd;
+    }
+
+    .report-results {
+      margin-top: 3rem;
+
+      .section-title {
+        margin-bottom: 2rem;
+        color: #1976d2;
+      }
+
+      .domain-card {
+        height: 100%;
+        background-color: #fff;
+        transition: transform 0.2s;
+
+        &:hover {
+          transform: translateY(-5px);
+        }
+
+        .domain-stats {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          .stats-text {
+            flex: 1;
+          }
+        }
+      }
+
+      .total-results-card {
+        margin-top: 2rem;
+        background-color: #f5f5f5;
+
+        .total-stats {
+          padding: 1rem;
+        }
+      }
+    }
+
+    .final-observations {
+      margin-top: 3rem;
+      margin-bottom: 2rem;
+
+      .MuiTextField-root {
+        background-color: #fff;
+      }
+    }
+
+    .send-button-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 2rem;
+
+      .MuiButton-root {
+        padding: 0.8rem 2rem;
+        font-size: 1.1rem;
+      }
+    }
+  }
+}
