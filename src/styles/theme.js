@@ -21,8 +21,8 @@ export const theme = createTheme({
             default: palette.darkBlue,
         },
         primary: {
-            main: palette.midBlue,
-            light: palette.paleOrange,
+            main: palette.darkBlue,
+            light: palette.midBlue,
             contrastText: palette.cream,
         },
         secondary: {
@@ -41,6 +41,10 @@ export const theme = createTheme({
         error: {
             main: palette.burntOrange,
             light: `${palette.burntOrange}CC`,
+        },
+        info: {
+            main: palette.greyPurple,
+            light: palette.mauve,
         },
     },
     typography: {
@@ -96,14 +100,23 @@ export const theme = createTheme({
 });
 
 // Custom styled notification component
-export const StyledMaterialDesignContent = styled(MaterialDesignContent)(({ theme }) => ({
-    "&.notistack-MuiContent-success": {
-        backgroundColor: theme.palette.success.main,
-    },
-    "&.notistack-MuiContent-error": {
-        backgroundColor: theme.palette.error.main,
-    },
-    "&.notistack-MuiContent-warning": {
-        backgroundColor: theme.palette.warning.main,
-    },
-}));
+export const StyledMaterialDesignContent = styled(MaterialDesignContent)(
+    ({ theme }) => ({
+        "&.notistack-MuiContent-success": {
+            backgroundColor: theme.palette.success.main,
+            color: theme.palette.primary.main,
+        },
+        "&.notistack-MuiContent-error": {
+            backgroundColor: theme.palette.error.main,
+            color: theme.palette.primary.main,
+        },
+        "&.notistack-MuiContent-warning": {
+            backgroundColor: theme.palette.warning.main,
+            color: theme.palette.primary.main,
+        },
+        "&.notistack-MuiContent-info": {
+            backgroundColor: theme.palette.info.main,
+            color: palette.mauve,
+        },
+    }),
+);

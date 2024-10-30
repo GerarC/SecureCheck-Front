@@ -1,9 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "../pages/auditor/home/Home"
 import Login from "../pages/login/Login";
-import List from "../pages/auditor/list/List";
+import Companies from "../pages/auditor/companies/Companies";
 import Single from "../pages/auditor/single/Single";
-import New from "../pages/auditor/new/New";
 import { AuthenticationProvider } from "../provider/authentication-provider";
 import ProtectedRoute from "./protected-routes";
 import ROLES from "../utils/roles";
@@ -26,9 +25,8 @@ function Routing() {
 					<Route index element={<Home />} />
 					<Route path="auditoria/:id" element={<Audit />} />
 					<Route path="empresas">
-						<Route index element={<List />} />
+						<Route index element={<Companies />} />
 						<Route path=":empresanit" element={<Single />} />
-						<Route path="new" element={<New />} />
 					</Route>
 				</Route>
 			</Routes>

@@ -12,11 +12,13 @@ createRoot(document.getElementById("root")).render(
         <ThemeProvider theme={theme}>
             <BrowserRouter>
                 <SnackbarProvider
+                    preventDuplicate
                     maxSnack={6}
                     Components={{
                         success: StyledMaterialDesignContent,
                         error: StyledMaterialDesignContent,
                         warning: StyledMaterialDesignContent,
+                        info: StyledMaterialDesignContent,
                     }}
                 >
                     <Routing />

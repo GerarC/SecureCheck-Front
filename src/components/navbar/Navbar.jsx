@@ -5,50 +5,51 @@ import Logo from "../../assets/securecheck-no-background.png";
 import { APPLICATION_NAME } from "../../utils/constants/general-constants";
 
 const Navbar = ({ handleMenu }) => {
-  const theme = useTheme();
-  return (
-    <AppBar
-      position="fixed"
-      sx={{
-        justifyItems: "center",
-        zIndex: (theme) => theme.zIndex.drawer + 1,
-        justifyContent: "center",
-        textJustify: "center",
-        backgroundColor: theme.palette.background.default,
-        color: theme.palette.success.main,
-      }}
-      enableColorOnDark
-    >
-      <Toolbar backgroundColor="primary">
-        <IconButton
-          size="large"
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          sx={{ mr: 1 }}
-          onClick={() => handleMenu()}
-        >
-          <img src={Logo} style={{ aspectRatio: "315/375", height: "40px" }} />
-        </IconButton>
-        <Typography
-          variant="h5"
-          component="div"
-          sx={{
-            flexGrow: 1,
-            display: { xs: "none", md: "flex" },
-            fontFamily: "monospace",
-            fontWeight: 700,
-            textDecoration: "none",
-          }}
-        >
-          {APPLICATION_NAME}
-        </Typography>
-        <Box>
-          <MenuIcon />
-        </Box>
-      </Toolbar>
-    </AppBar>
-  );
+	const theme = useTheme();
+	return (
+		<AppBar
+			position="fixed"
+			sx={{
+				justifyItems: "center",
+				zIndex: (theme) => theme.zIndex.drawer + 1,
+				justifyContent: "center",
+				textJustify: "center",
+				backgroundColor: theme.palette.background.default,
+				color: theme.palette.success.main,
+			}}
+			enableColorOnDark
+		>
+			<Toolbar backgroundColor="primary">
+				<IconButton
+					size="large"
+					edge="start"
+					color="inherit"
+					aria-label="menu"
+					sx={{ mr: 1 }}
+					onClick={() => handleMenu()}
+				>
+					<img src={Logo} style={{ aspectRatio: "315/375", height: "40px" }} />
+				</IconButton>
+				<Typography
+					variant="h5"
+					component="div"
+					letterSpacing={2}
+					sx={{
+						flexGrow: 1,
+						display: { xs: "none", md: "flex" },
+						fontFamily: "monospace",
+						fontWeight: 700,
+						textDecoration: "none",
+					}}
+				>
+					{APPLICATION_NAME}
+				</Typography>
+				<Box>
+					<MenuIcon />
+				</Box>
+			</Toolbar>
+		</AppBar>
+	);
 };
 
 export default Navbar;

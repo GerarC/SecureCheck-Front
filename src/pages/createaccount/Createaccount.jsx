@@ -61,7 +61,7 @@ const CreateAccount = () => {
                                     startAdornment: (
                                         <User
                                             style={{
-                                                color: theme.palette.primary.main,
+                                                color: theme.palette.secondary.main,
                                                 marginRight: "14px",
                                             }}
                                         />
@@ -87,7 +87,7 @@ const CreateAccount = () => {
                                     startAdornment: (
                                         <User
                                             style={{
-                                                color: theme.palette.primary.main,
+                                                color: theme.palette.secondary.main,
                                                 marginRight: "14px",
                                             }}
                                         />
@@ -113,7 +113,7 @@ const CreateAccount = () => {
                                     startAdornment: (
                                         <CreditCard
                                             style={{
-                                                color: theme.palette.primary.main,
+                                                color: theme.palette.secondary.main,
                                                 marginRight: "14px",
                                             }}
                                         />
@@ -139,7 +139,7 @@ const CreateAccount = () => {
                                     startAdornment: (
                                         <Mail
                                             style={{
-                                                color: theme.palette.primary.main,
+                                                color: theme.palette.secondary.main,
                                                 marginRight: "14px",
                                             }}
                                         />
@@ -164,7 +164,7 @@ const CreateAccount = () => {
                                     startAdornment: (
                                         <Calendar
                                             style={{
-                                                color: theme.palette.primary.main,
+                                                color: theme.palette.secondary.main,
                                                 marginRight: "14px",
                                             }}
                                         />
@@ -190,7 +190,7 @@ const CreateAccount = () => {
                                     startAdornment: (
                                         <Lock
                                             style={{
-                                                color: theme.palette.primary.main,
+                                                color: theme.palette.secondary.main,
                                                 marginRight: "14px",
                                             }}
                                         />
@@ -216,7 +216,7 @@ const CreateAccount = () => {
                                     startAdornment: (
                                         <Lock
                                             style={{
-                                                color: theme.palette.primary.main,
+                                                color: theme.palette.secondary.main,
                                                 marginRight: "14px",
                                             }}
                                         />
@@ -232,30 +232,41 @@ const CreateAccount = () => {
                             fullWidth
                             sx={{
                                 background: theme.palette.primary.main,
-                                color: "#fff",
-                                borderRadius: 1,
                                 "&:hover": {
-                                    background: theme.palette.warning.main,
+                                    background: theme.palette.primary.light,
                                 },
                             }}
                         >
                             Crear Cuenta
                         </Button>
                     </Box>
-                    <Box textAlign="center">
+                    <Box
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            gap: "0.5rem"
+                        }}
+                    >
                         <Typography variant="body2" color="#333">
-                            ¿Ya tienes una cuenta?{" "}
-                            <a
-                                onClick={() => navigate("/login")}
-                                style={{
-                                    textDecoration: "none",
-                                    color: theme.palette.primary.main,
-                                    cursor: "pointer",
-                                }}
-                            >
-                                Iniciar Sesión
-                            </a>
+                            ¿Ya tiene cuenta?
                         </Typography>
+                        <a
+                            onClick={() => navigate("/login")}
+                            style={{
+                                textDecoration: "none",
+                                color: theme.palette.primary.main,
+                                cursor: "pointer",
+                            }}
+                        >
+                            <Typography
+                                variant="body2"
+                                color="secondary"
+                                sx={{ "&:hover": { color: theme.palette.secondary.dark } }}
+                            >
+                                Iniciar sesión
+                            </Typography>
+                        </a>
                     </Box>
                 </form>
             </Container>

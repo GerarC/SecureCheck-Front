@@ -77,10 +77,10 @@ const Login = () => {
                 }}
             >
                 <Box textAlign="center" mb={4}>
-                    <Typography variant="h4" fontWeight={600} color="#333">
+                    <Typography variant="h4" fontWeight={600} color="primary">
                         Bienvenido Señor(a) Auditor
                     </Typography>
-                    <Typography variant="body1" color="#333">
+                    <Typography variant="body1" color="primary">
                         Inicie sesión para acceder a la herramienta de auditoría ISO 27001
                     </Typography>
                 </Box>
@@ -97,7 +97,7 @@ const Login = () => {
                                     startAdornment: (
                                         <Mail
                                             style={{
-                                                color: theme.palette.primary.main,
+                                                color: theme.palette.secondary.main,
                                                 marginRight: "14px",
                                             }}
                                         />
@@ -135,7 +135,7 @@ const Login = () => {
                                     startAdornment: (
                                         <Lock
                                             style={{
-                                                color: theme.palette.primary.main,
+                                                color: theme.palette.secondary.main,
                                                 marginRight: "14px",
                                             }}
                                         />
@@ -162,18 +162,22 @@ const Login = () => {
                         />
                     </Box>
                     <Box textAlign="right" mb={2}>
-                        <Typography variant="body2" color="#333">
-                            <a
-                                href="#"
-                                style={{
-                                    textDecoration: "none",
-                                    color: theme.palette.primary.main,
-                                    cursor: "pointer",
-                                }}
+                        <a
+                            href="#"
+                            style={{
+                                textDecoration: "none",
+                                color: theme.palette.secondary.main,
+                                cursor: "pointer",
+                            }}
+                        >
+                            <Typography
+                                variant="body2"
+                                color="secondary"
+                                sx={{ "&:hover": { color: theme.palette.secondary.dark } }}
                             >
                                 ¿Olvidó su contraseña?
-                            </a>
-                        </Typography>
+                            </Typography>
+                        </a>
                     </Box>
                     <Box mb={4}>
                         <Button
@@ -182,30 +186,41 @@ const Login = () => {
                             fullWidth
                             sx={{
                                 background: theme.palette.primary.main,
-                                color: "#fff",
-                                borderRadius: 1,
                                 "&:hover": {
-                                    background: theme.palette.warning.main,
+                                    background: theme.palette.primary.light,
                                 },
                             }}
                         >
                             Iniciar Sesión
                         </Button>
                     </Box>
-                    <Box textAlign="center">
+                    <Box
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            gap: "0.5rem"
+                        }}
+                    >
                         <Typography variant="body2" color="#333">
-                            ¿Aun no tienes cuenta?{" "}
-                            <a
-                                onClick={() => redirect("/register")}
-                                style={{
-                                    textDecoration: "none",
-                                    color: theme.palette.primary.main,
-                                    cursor: "pointer",
-                                }}
-                            >
-                                Crear Cuenta
-                            </a>
+                            ¿Aun no tienes cuenta?
                         </Typography>
+                        <a
+                            onClick={() => redirect("/register")}
+                            style={{
+                                textDecoration: "none",
+                                color: theme.palette.primary.main,
+                                cursor: "pointer",
+                            }}
+                        >
+                            <Typography
+                                variant="body2"
+                                color="secondary"
+                                sx={{ "&:hover": { color: theme.palette.secondary.dark } }}
+                            >
+                                Crear cuenta
+                            </Typography>
+                        </a>
                     </Box>
                 </form>
             </Container>
