@@ -1,25 +1,22 @@
 import { useTheme } from "@emotion/react";
-import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, IconButton, Toolbar, Typography, } from "@mui/material";
 import { MenuIcon } from "lucide-react";
 import Logo from "../../assets/securecheck-no-background.png";
 import { APPLICATION_NAME } from "../../utils/constants/general-constants";
 
 const Navbar = ({ handleMenu }) => {
 	const theme = useTheme();
+
 	return (
 		<AppBar
 			position="fixed"
 			sx={{
-				justifyItems: "center",
 				zIndex: (theme) => theme.zIndex.drawer + 1,
-				justifyContent: "center",
-				textJustify: "center",
 				backgroundColor: theme.palette.background.default,
-				color: theme.palette.success.main,
+				color: theme.palette.secondary.main,
 			}}
-			enableColorOnDark
 		>
-			<Toolbar backgroundColor="primary">
+			<Toolbar>
 				<IconButton
 					size="large"
 					edge="start"
@@ -28,7 +25,7 @@ const Navbar = ({ handleMenu }) => {
 					sx={{ mr: 1 }}
 					onClick={() => handleMenu()}
 				>
-					<img src={Logo} style={{ aspectRatio: "315/375", height: "40px" }} />
+					<img src={Logo} alt="Logo" style={{ aspectRatio: "315/375", height: "40px" }} />
 				</IconButton>
 				<Typography
 					variant="h5"
@@ -36,7 +33,7 @@ const Navbar = ({ handleMenu }) => {
 					letterSpacing={2}
 					sx={{
 						flexGrow: 1,
-						display: { xs: "none", md: "flex" },
+						display: { xs: "none", md: "flex" }, 
 						fontFamily: "monospace",
 						fontWeight: 700,
 						textDecoration: "none",
@@ -44,8 +41,18 @@ const Navbar = ({ handleMenu }) => {
 				>
 					{APPLICATION_NAME}
 				</Typography>
-				<Box>
-					<MenuIcon />
+				<Box
+					sx={{
+						display: { xs: "flex", md: "none" }, 
+					}}
+				>
+					<IconButton
+						color="inherit"
+						aria-label="menu"
+						onClick={() => handleMenu()}
+					>
+						<MenuIcon />
+					</IconButton>
 				</Box>
 			</Toolbar>
 		</AppBar>

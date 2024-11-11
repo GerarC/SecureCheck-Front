@@ -1,16 +1,17 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
-import "./auditor.scss";
 import { useState } from "react";
 import { Logout, SpaceDashboard, Work } from "@mui/icons-material";
 import localStorageService from "../../services/local-storage";
-import { Box, Toolbar, styled } from "@mui/material";
+import { Box, Toolbar, styled, useMediaQuery } from "@mui/material";
 import { SIDEBAR_WIDTH } from "../../utils/constants/auditor-constants";
 
 const Auditor = () => {
   const redirect = useNavigate();
   const [asideOpen, setAsideOpen] = useState(true);
+  const isSmallScreen = useMediaQuery(theme => theme.breakpoints.down("sm")); 
+
   const asideItems = [
     {
       text: "Dashboard",
@@ -20,7 +21,7 @@ const Auditor = () => {
     {
       text: "Empresas",
       icon: <Work color="secondary" />,
-      function: () => redirect("/auditor/empresas"),
+      function: () => redirect("/auditor/companies"),
     },
     {
       text: "Logout",
@@ -36,7 +37,7 @@ const Auditor = () => {
     <Box className="main-container">
       <Navbar handleMenu={() => setAsideOpen(!asideOpen)} />
       <Sidebar open={asideOpen} items={asideItems} />
-      <Main open={asideOpen}>
+      <Main open={asideOpen} isSmallScreen={isSmallScreen}>
         <Toolbar />
         <Outlet />
       </Main>
@@ -45,27 +46,22 @@ const Auditor = () => {
 };
 
 const Main = styled("main", {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme }) => ({
+  shouldForwardProp: (prop) => prop !== "open" && prop !== "isSmallScreen",
+})(({ theme, open, isSmallScreen }) => ({
   flexGrow: 1,
-  padding: theme.spacing(3),
+  padding: isSmallScreen ? theme.spacing(1) : theme.spacing(4),
   transition: theme.transitions.create("margin", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
   marginLeft: 0,
-  variants: [
-    {
-      props: ({ open }) => open,
-      style: {
-        transition: theme.transitions.create("margin", {
-          easing: theme.transitions.easing.easeOut,
-          duration: theme.transitions.duration.enteringScreen,
-        }),
-        marginLeft: `${SIDEBAR_WIDTH}px`,
-      },
-    },
-  ],
+  ...(open && {
+    transition: theme.transitions.create("margin", {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: isSmallScreen ? 0 : `${SIDEBAR_WIDTH}px`, 
+  }),
 }));
 
 export default Auditor;

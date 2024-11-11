@@ -8,6 +8,7 @@ export const method = {
 	post: "POST",
 	delete: "DELETE",
 	update: "PUT",
+	patch: "PATCH",
 };
 
 export const basicHeader = { "Content-Type": "application/json" }

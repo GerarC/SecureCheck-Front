@@ -1,4 +1,3 @@
-import "./sidebar.scss";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import {
 	Drawer,
@@ -9,13 +8,19 @@ import {
 	ListItemText,
 	Toolbar,
 	Typography,
+	Box,
+	useTheme,
+	useMediaQuery
 } from "@mui/material";
 import { SIDEBAR_WIDTH } from "../../utils/constants/auditor-constants";
 
 const Sidebar = ({ open = true, items }) => {
+	const theme = useTheme();
+	const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
 	return (
 		<Drawer
-			variant="persistent"
+			variant={isSmallScreen ? "temporary" : "persistent"}
 			open={open}
 			sx={{
 				width: SIDEBAR_WIDTH,
@@ -25,31 +30,34 @@ const Sidebar = ({ open = true, items }) => {
 					width: SIDEBAR_WIDTH,
 					boxSizing: "border-box",
 					zIndex: 2,
+					overflow: 'hidden', 
 				},
 			}}
 		>
 			<Toolbar />
-			<List>
-				{items ? (
-					items.map((item, index) => (
-						<ListItem disablePadding key={index}>
-							<ListItemButton onClick={() => item.function()}>
-								<ListItemIcon>{item.icon}</ListItemIcon>
-								<ListItemText primary={<Typography variant="body1" color="primary">{item.text}</Typography>} />
+			<Box sx={{ overflowY: 'auto' }}> 
+				<List>
+					{items ? (
+						items.map((item, index) => (
+							<ListItem disablePadding key={index}>
+								<ListItemButton onClick={() => item.function()}>
+									<ListItemIcon>{item.icon}</ListItemIcon>
+									<ListItemText primary={<Typography variant="body1" color="primary">{item.text}</Typography>} />
+								</ListItemButton>
+							</ListItem>
+						))
+					) : (
+						<ListItem disablePadding>
+							<ListItemButton>
+								<ListItemIcon>
+									<DashboardIcon />
+								</ListItemIcon>
+								<ListItemText primary="Dashboard" />
 							</ListItemButton>
 						</ListItem>
-					))
-				) : (
-					<ListItem disablePadding>
-						<ListItemButton>
-							<ListItemIcon>
-								<DashboardIcon />
-							</ListItemIcon>
-							<ListItemText primary="Dashboard" />
-						</ListItemButton>
-					</ListItem>
-				)}
-			</List>
+					)}
+				</List>
+			</Box>
 		</Drawer>
 	);
 };

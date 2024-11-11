@@ -1,16 +1,40 @@
-import { useTheme } from "@emotion/react"
-import { Box } from "@mui/material"
+import React from "react";
+import { Box, useTheme, useMediaQuery } from "@mui/material";
 
-export default function BentoBox({ columnCount = 4, children }) {
-	console.log(children)
-	const theme = useTheme()
-	return <Box id="BentoBox" sx={{
-		display: "grid",
-		gridTemplateColumns: `repeat(${columnCount}, minmax(0, 1fr))`,
-		gridTemplateRows: `repeat(${children.length / columnCount}, minmax(0, 1fr))`,
-			gridAutoRows: "max",
-		gap: theme.spacing(4)
-	}}>
-		{children}
-	</Box>
+export default function BentoBox({ children }) {
+	const theme = useTheme();
+	const gap = theme.spacing(4);
+
+	const isLgScreen = useMediaQuery(theme.breakpoints.up("lg"));
+	const isMdScreen = useMediaQuery(theme.breakpoints.up("md"));
+	const isSmScreen = useMediaQuery(theme.breakpoints.up("sm"));
+
+	let columnCount;
+	if (isLgScreen) {
+		columnCount = 4;
+	} else if (isMdScreen) {
+		columnCount = 3;
+	} else if (isSmScreen) {
+		columnCount = 2;
+	} else {
+		columnCount = 1;
+	}
+
+	const rowCount = Math.ceil(React.Children.count(children) / columnCount);
+
+	return (
+		<Box
+			id="BentoBox"
+			sx={{
+				display: "grid",
+				gridTemplateColumns: `repeat(${columnCount}, 1fr)`,
+				gridTemplateRows: `repeat(${rowCount}, 1fr)`,
+				gap: gap,
+				width: "100%",
+				overflow: "hidden",
+			}}
+		>
+			{children}
+		</Box>
+	);
 }

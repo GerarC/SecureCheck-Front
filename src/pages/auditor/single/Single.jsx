@@ -1,9 +1,9 @@
+import Reports from "../../../components/reports/Reports"
 import "./single.scss"
 
 const Single = () => {
   return (
-    <div >single</div>
-
+	  <Reports/>
   )
 }
 

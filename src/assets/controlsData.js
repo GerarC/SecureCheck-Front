@@ -5,8 +5,8 @@ export const controlsData = [
     controls: [
       {
         number: "5.1",
-        name: "Políticas de seguridad de la información",
-        description: "La política de seguridad de la información y las políticas específicas del tema deben ser definidas, aprobadas por la gerencia, publicadas, comunicadas y reconocidas por el personal relevante y las partes interesadas.",
+        name: "Políticasdkfj dfl jdfhl dkfhslkdfjsl jdsjdjfsl dkjfsdfkj|sfkjadkfjdf de seguridad de la información",
+        description: "La política de seguridad de la información y las políticas edfjsfksjdel tema deben ser definidas, aprobadas por la gerencia, publicadas, comunicadas y reconocidas por el personal relevante y las partes interesadas.",
         questions: [
           "¿Está definida y aprobada por la gerencia la política de seguridad de la información?",
           "¿Se comunica de manera efectiva la política al personal y partes interesadas?",

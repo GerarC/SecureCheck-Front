@@ -1,5 +1,5 @@
-import { Route, Routes } from "react-router-dom";
-import Home from "../pages/auditor/home/Home"
+import { Navigate, Route, Routes } from "react-router-dom";
+import Home from "../pages/auditor/home/Home";
 import Login from "../pages/login/Login";
 import Companies from "../pages/auditor/companies/Companies";
 import Single from "../pages/auditor/single/Single";
@@ -7,30 +7,56 @@ import { AuthenticationProvider } from "../provider/authentication-provider";
 import ProtectedRoute from "./protected-routes";
 import ROLES from "../utils/roles";
 import Auditor from "../pages/auditor/Auditor";
-import Audit from "../pages/auditor/audit/audit";
-import CreateAccount from "../pages/createaccount/Createaccount";
+import Audit from "../pages/auditor/audit/Audit";
+import CreateAccount from "../pages/create-account/Createaccount";
+import Audits from "../pages/auditor/audits/Audits";
+import {
+    ROUTER_ABSOLUTE_AUDITOR_PATH,
+    ROUTER_ABSOLUTE_LOGIN_PATH,
+    ROUTER_ABSOLUTE_REGISTER_PATH,
+    ROUTER_ABSOLUTE_ROOT_PATH,
+    ROUTER_AUDITOR_COMPANIES_PATH,
+    ROUTER_AUDITOR_COMPANY_AUDITS_PATH,
+    ROUTER_AUDITOR_COMPANY_FORM_PATH,
+    ROUTER_AUDIT_REPORT_PATH,
+} from "../utils/constants/router-constants";
 
-function Routing() {
-	return (
-		<AuthenticationProvider>
-			<Routes>
-				<Route path="/login" element={<Login />} />
-				<Route path="/" element={<Login />} />
-				<Route path="/register" element={<CreateAccount />} />
-				<Route path="/auditor"
-					element={<ProtectedRoute allowedRoles={[ROLES.auditor, ROLES.admin]}>
-						<Auditor />
-					</ProtectedRoute>}>
-					<Route index element={<Home />} />
-					<Route path="auditoria/:id" element={<Audit />} />
-					<Route path="empresas">
-						<Route index element={<Companies />} />
-						<Route path=":empresanit" element={<Single />} />
-					</Route>
-				</Route>
-			</Routes>
-		</AuthenticationProvider>
-	);
+export default function Routing() {
+    return (
+        <AuthenticationProvider>
+            <Routes>
+                <Route
+                    path={ROUTER_ABSOLUTE_ROOT_PATH}
+                    element={<Navigate to={ROUTER_ABSOLUTE_LOGIN_PATH} replace />}
+                />
+                <Route path={ROUTER_ABSOLUTE_LOGIN_PATH} element={<Login />} />
+                <Route
+                    path={ROUTER_ABSOLUTE_REGISTER_PATH}
+                    element={<CreateAccount />}
+                />
+                <Route
+                    path={ROUTER_ABSOLUTE_AUDITOR_PATH}
+                    element={
+                        <ProtectedRoute allowedRoles={[ROLES.auditor, ROLES.admin]}>
+                            <Auditor />
+                        </ProtectedRoute>
+                    }
+                >
+                    <Route index element={<Home />} />
+                    <Route path={ROUTER_AUDITOR_COMPANIES_PATH}>
+                        <Route index element={<Companies />} />
+                        <Route
+                            path={ROUTER_AUDITOR_COMPANY_FORM_PATH}
+                            element={<Audit />}
+                        />
+                        <Route
+                            path={ROUTER_AUDITOR_COMPANY_AUDITS_PATH}
+                            element={<Audits />}
+                        />
+                    </Route>
+                    <Route path={ROUTER_AUDIT_REPORT_PATH} element={<Single />} />
+                </Route>
+            </Routes>
+        </AuthenticationProvider>
+    );
 }
-
-export default Routing;

@@ -9,6 +9,7 @@ const companyService = {
 	delete: (id) => service(`${endpoint}/${id}`, method.delete, defaultHeaders()),
 	get: (id) => service(`${endpoint}/${id}`, method.get, defaultHeaders()),
 	questions: (id) => service(`${endpoint}/${id}/questions`, method.get, defaultHeaders()),
+	finishedAudits: (id) => service(`${endpoint}/${id}/audits`, method.get, defaultHeaders()),
 }
 
 export default companyService;
