@@ -24,18 +24,54 @@ import {
 	CircularProgress,
 	useTheme,
 	Stack,
+	FormControl,
+	TextField,
+	Typography
 } from "@mui/material";
 import { debounce } from "lodash";
 import AnswerProvider from "../../../provider/answer-provider";
 
-function Audit() {
+function Form() {
 	const { id: companyId } = useParams();
 	const [form, setForm] = useState({});
+	const objectiveRef = useRef("");
+	const commentRef = useRef("");
 	const changedAnswersRef = useRef(new Map());
 
 	const theme = useTheme();
 	const navigate = useNavigate();
 
+	// Save the objective and comment to the audit
+	const saveAuditData = async () => {
+		const response = await auditService.patchAudit(form.id, {
+			objective: objectiveRef.current,
+			comment: commentRef.current,
+		});
+
+		if (response.ok) {
+			enqueueSnackbar(SAVED_FORM_MESSAGE, { variant: "success" });
+			return;
+		}
+
+		const errorResponse = await response.json();
+		enqueueSnackbar(errorResponse.message, { variant: response.status === 400 ? "warning" : "error" });
+	};
+
+	// Debounced save function for objective and comment
+	const debouncedSaveAuditData = debounce(() => {
+		enqueueSnackbar(SAVING_FORM_MESSAGE, { variant: "info" });
+		saveAuditData();
+	}, 5000);
+
+	// Handle change of text in objective or comment
+	const handleAuditDetailChange = (field) => (event) => {
+		if (field === "objective") {
+			objectiveRef.current = event.target.value;
+		} else {
+			commentRef.current = event.target.value;
+		}
+		debouncedSaveAuditData();
+	};
 
 	const saveData = async () => {
 		const answersArray = Array.from(changedAnswersRef.current.values());
@@ -51,8 +87,6 @@ function Audit() {
 		enqueueSnackbar(errorResponse.message, { variant: response.status === 400 ? "warning" : "error" });
 	};
 
-
-
 	const debouncedSaveData = debounce(() => {
 		enqueueSnackbar(SAVING_FORM_MESSAGE, { variant: "info" });
 		saveData();
@@ -66,8 +100,7 @@ function Audit() {
 
 		changedAnswersRef.current.set(answer.id, { ...answer });
 
-		debouncedSaveData()
-
+		debouncedSaveData();
 	}, [debouncedSaveData]);
 
 	async function editQuestion(questionId, body) {
@@ -124,6 +157,8 @@ function Audit() {
 				if (response.ok) return response.json();
 			}).then((fetchedForm) => {
 				setForm(fetchedForm);
+				objectiveRef.current = fetchedForm.objective;
+				commentRef.current = fetchedForm.comment;
 			});
 		},
 		[companyId],
@@ -143,78 +178,124 @@ function Audit() {
 			}
 		}).then((fetchedForm) => {
 			setForm(fetchedForm);
+			objectiveRef.current = fetchedForm.objective;
+			commentRef.current = fetchedForm.comment;
 		});
 	}, [companyId, retry]);
 
 	return (
 		<>
 			{form ? (
-				<Box
-					sx={{
-						display: "flex",
-						flexDirection: "column",
-						alignItems: "center",
-						justifyContent: "center",
-						gap: theme.spacing(4),
-						padding: theme.spacing(2),
+				<form
+					onSubmit={(e) => {
+						e.preventDefault();
+						finalizeAudit()
 					}}
 				>
-					<AnswerProvider handleChangeAnswer={handleChangeAnswer}>
-						<AuditForm
-							form={form.domains}
-							editQuestion={editQuestion}
-							addQuestion={addQuestion}
-							deleteQuestion={deleteQuestion}
-						/>
-					</AnswerProvider>
-					<Stack
-						direction={{ xs: 'column', sm: 'row' }}
-						spacing={2}
-						width="100%"
-						padding={theme.spacing(2)}
-						justifyContent="center"
+					<Box
+						sx={{
+							display: "flex",
+							flexDirection: "column",
+							alignItems: "center",
+							justifyContent: "center",
+							gap: theme.spacing(4),
+							padding: theme.spacing(2),
+						}}
 					>
-						<Button
-							variant="contained"
-							size="large"
-							color="secondary"
-							onClick={() => finalizeAudit()}
-							sx={{
-								backgroundColor: theme.palette.secondary.main,
-								color: theme.palette.primary.main,
-								flex: 1,
-								"&:hover": {
-									backgroundColor: theme.palette.secondary.light,
-								},
-							}}
+						<Typography variant="h3">Formulario de la Auditoría</Typography>
+						{/* Objective TextField */}
+						<FormControl fullWidth>
+							<TextField
+								required
+								label="Objetivo de la auditoría"
+								multiline
+								rows={4}
+								defaultValue={objectiveRef.current}
+								onChange={handleAuditDetailChange("objective")}
+								fullWidth
+								variant="filled"
+								sx={{ margin: theme.spacing(2) }}
+							/>
+						</FormControl>
+
+						<AnswerProvider handleChangeAnswer={handleChangeAnswer}>
+							<AuditForm
+								form={form.domains}
+								editQuestion={editQuestion}
+								addQuestion={addQuestion}
+								deleteQuestion={deleteQuestion}
+							/>
+						</AnswerProvider>
+
+						{/* Comment TextField */}
+						<FormControl fullWidth>
+							<TextField
+								label="Comentarios adicionales"
+								required
+								multiline
+								rows={4}
+								defaultValue={commentRef.current}
+								onChange={handleAuditDetailChange("comment")}
+								fullWidth
+								variant="filled"
+								sx={{ margin: theme.spacing(2) }}
+							/>
+						</FormControl>
+
+						<Stack
+							direction={{ xs: 'column', sm: 'row' }}
+							spacing={2}
+							width="100%"
+							padding={theme.spacing(2)}
+							justifyContent="center"
 						>
-							Finalizar Auditoria
-						</Button>
-						<Button
-							variant="contained"
-							size="large"
-							color="primary"
-							onClick={() => saveData()}
-							sx={{
-								backgroundColor: theme.palette.primary.main,
-								color: theme.palette.primary.contrastText,
+							<FormControl sx={{
 								flex: 1,
-								"&:hover": {
-									backgroundColor: theme.palette.primary.light,
-								},
-							}}
-						>
-							Guardar Cambios
-						</Button>
-					</Stack>
-				</Box>
+							}}>
+								<Button
+									type="submit"
+									variant="contained"
+									size="large"
+									color="secondary"
+									sx={{
+										backgroundColor: theme.palette.secondary.main,
+										color: theme.palette.primary.main,
+										flex: 1,
+										"&:hover": {
+											backgroundColor: theme.palette.secondary.light,
+										},
+									}}
+								>
+									Finalizar Auditoria
+								</Button>
+							</FormControl>
+							<Button
+								variant="contained"
+								size="large"
+								color="primary"
+								onClick={() => saveData()}
+								sx={{
+									backgroundColor: theme.palette.primary.main,
+									color: theme.palette.primary.contrastText,
+									flex: 1,
+									"&:hover": {
+										backgroundColor: theme.palette.primary.light,
+									},
+								}}
+							>
+								Guardar Cambios
+							</Button>
+						</Stack>
+
+					</Box>
+				</form>
 			) : (
 				<Backdrop sx={{ color: "#fff", zIndex: 30 }} open={true}>
-					<CircularProgress size={100} />
+					<CircularProgress color="inherit" />
 				</Backdrop>
 			)}
 		</>
 	);
 }
 
-export default Audit;
+export default Form;

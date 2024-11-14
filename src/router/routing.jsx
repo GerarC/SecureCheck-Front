@@ -2,12 +2,12 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Home from "../pages/auditor/home/Home";
 import Login from "../pages/login/Login";
 import Companies from "../pages/auditor/companies/Companies";
-import Single from "../pages/auditor/single/Single";
+import AuditReport from "../pages/auditor/audit-report/AuditReport";
 import { AuthenticationProvider } from "../provider/authentication-provider";
 import ProtectedRoute from "./protected-routes";
 import ROLES from "../utils/roles";
 import Auditor from "../pages/auditor/Auditor";
-import Audit from "../pages/auditor/audit/Audit";
+import Form from "../pages/auditor/form/Form";
 import CreateAccount from "../pages/create-account/Createaccount";
 import Audits from "../pages/auditor/audits/Audits";
 import {
@@ -47,14 +47,14 @@ export default function Routing() {
                         <Route index element={<Companies />} />
                         <Route
                             path={ROUTER_AUDITOR_COMPANY_FORM_PATH}
-                            element={<Audit />}
+                            element={<Form />}
                         />
                         <Route
                             path={ROUTER_AUDITOR_COMPANY_AUDITS_PATH}
                             element={<Audits />}
                         />
                     </Route>
-                    <Route path={ROUTER_AUDIT_REPORT_PATH} element={<Single />} />
+                    <Route path={ROUTER_AUDIT_REPORT_PATH} element={<AuditReport />} />
                 </Route>
             </Routes>
         </AuthenticationProvider>

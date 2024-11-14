@@ -1,231 +1,195 @@
-import { useState } from 'react';
-import { PieChart } from '@mui/x-charts/PieChart';
-import {
-  Paper,
-  Typography,
-  Grid2,
-  Divider,
-  TextField,
-  Button,
-  Card,
-  CardContent
-} from '@mui/material';
-import { Mail } from 'lucide-react';
-import './reports.scss';
+import { useTheme } from "@mui/material";
+import { Box, Card, CardContent, Typography, Paper } from "@mui/material";
+import { PieChart, pieArcLabelClasses } from "@mui/x-charts/PieChart";
+import ControlCard from "./ControlCard";
 
-const CompanyInfoCard = ({ companyData }) => (
-  <Card className="info-card">
-    <CardContent>
-      <Typography variant="h6" gutterBottom>
-        Datos de la Empresa
-      </Typography>
-      <Divider />
-      <div className="info-item">
-        <Typography variant="subtitle1">Nombre: {companyData.name}</Typography>
-        <Typography variant="subtitle1">NIT: {companyData.nit}</Typography>
-        <Typography variant="subtitle1">Dirección: {companyData.address}</Typography>
-        <Typography variant="subtitle1">Correo: {companyData.contactEmail}</Typography>
-        <Typography variant="subtitle1">Teléfono: {companyData.contactPhone}</Typography>
-      </div>
-    </CardContent>
-  </Card>
-);
-
-const AuditorInfoCard = ({ auditorData }) => (
-  <Card className="info-card">
-    <CardContent>
-      <Typography variant="h6" gutterBottom>
-        Datos del Auditor
-      </Typography>
-      <Divider />
-      <div className="info-item">
-        <Typography variant="subtitle1">Nombre: {auditorData.name} {auditorData.lastname}</Typography>
-        <Typography variant="subtitle1">ID: {auditorData.identityDocument}</Typography>
-        <Typography variant="subtitle1">Correo: {auditorData.email}</Typography>
-        <Typography variant="subtitle1">Teléfono: {auditorData.phone}</Typography>
-      </div>
-    </CardContent>
-  </Card>
-);
-
-const DomainResultCard = ({ domain }) => (
-  <Card className="domain-card">
-    <CardContent>
-      <Typography variant="h6" gutterBottom>
-        {domain.name}
-      </Typography>
-      <div className="domain-stats">
-        <div className="stats-text">
-          <Typography>Controles validados (SI): {domain.yes}</Typography>
-          <Typography>Controles No validados (NO): {domain.no}</Typography>
-          <Typography>
-            Porcentaje de validación: {((domain.yes / (domain.yes + domain.no)) * 100).toFixed(1)}%
-          </Typography>
-        </div>
-        <PieChart
-          series={[
-            {
-              data: [
-                { id: 0, value: domain.yes, label: 'SI', color: '#4CAF50' },
-                { id: 1, value: domain.no, label: 'NO', color: '#f44336' }
-              ],
-            },
-          ]}
-          width={200}
-          height={200}
-        />
-      </div>
-    </CardContent>
-  </Card>
-);
-
-const TotalResultsCard = ({ totalYes, totalNo, totalYesPercentage, totalNoPercentage }) => (
-  <Card className="total-results-card">
-    <CardContent>
-      <Typography variant="h6" gutterBottom>
-        Resultados Totales
-      </Typography>
-      <Grid2 container spacing={2}>
-        <Grid2 item xs={12} md={6}>
-          <div className="total-stats">
-            <Typography>
-              Total Controles validados (SI): {totalYes} ({totalYesPercentage}%)
-            </Typography>
-            <Typography>
-              Total Controles No validados (NO): {totalNo} ({totalNoPercentage}%)
-            </Typography>
-          </div>
-        </Grid2>
-        <Grid2 item xs={12} md={6}>
-          <PieChart
-            series={[
-              {
-                data: [
-                  { id: 0, value: totalYes, label: 'SI', color: '#4CAF50' },
-                  { id: 1, value: totalNo, label: 'NO', color: '#f44336' }
-                ],
-              },
-            ]}
-            width={300}
-            height={200}
-          />
-        </Grid2>
-      </Grid2>
-    </CardContent>
-  </Card>
-);
-
-const FinalObservations = ({ finalObservations, setFinalObservations }) => (
-  <div className="final-observations">
-    <Typography variant="h6" gutterBottom>
-      Observaciones Finales
-    </Typography>
-    <TextField
-      fullWidth
-      multiline
-      rows={4}
-      variant="outlined"
-      value={finalObservations}
-      onChange={(e) => setFinalObservations(e.target.value)}
-    />
-  </div>
-);
-
-const Reports = ({ auditData, companyData, auditorData }) => {
-  const [finalObservations, setFinalObservations] = useState('');
-
-  const domains = [
-    { name: 'Controles organizacionales', yes: 15, no: 5 },
-    { name: 'Controles de personas', yes: 12, no: 8 },
-    { name: 'Controles físicos', yes: 18, no: 2 },
-    { name: 'Controles tecnológicos', yes: 20, no: 5 }
-  ];
-	
-  const auditor = {
-	  name: "Juan",
-	  lastname:"Juantonez",
-	  identityDocument: "15456778978",
-	  phone: "+573245465575"
+const getOutcomeText = (outcome, theme) => {
+  switch (outcome) {
+    case "CONFORMING":
+      return { text: "Conforme", color: theme.palette.success.main };
+    case "NONCONFORMING":
+      return { text: "No conforme", color: theme.palette.error.main };
+    case "NOT_APPLICABLE":
+      return { text: "No aplica", color: theme.palette.info.main };
+    default:
+      return { text: "Desconocido", color: theme.palette.text.disabled };
   }
+};
 
-  const company = {
-	id: "ertyiujypoi456",
-	nit: "2345346457",
-	name: "Empresa xx-d",
-	address: "Calle mala",
-	contactEmail: "empresa@empresa.com",
-	contactPhone: "+563332224356",
-	createdAt: "2024-11-03T22:56:53.974Z"
-  }
-
-  const totalControls = domains.reduce((acc, domain) => acc + domain.yes + domain.no, 0);
-  const totalYes = domains.reduce((acc, domain) => acc + domain.yes, 0);
-  const totalNo = domains.reduce((acc, domain) => acc + domain.no, 0);
-  const totalYesPercentage = ((totalYes / totalControls) * 100).toFixed(1);
-  const totalNoPercentage = ((totalNo / totalControls) * 100).toFixed(1);
-
-  const handleSendEmail = () => {
-    console.log('Sending email...');
+const formatDate = (dateString) => {
+  const options = {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
   };
+  return new Date(dateString).toLocaleDateString(undefined, options);
+};
+
+const getAuditPieData = (stats, theme) => [
+  { label: "Conforme", value: stats.conformingControls, color: theme.palette.success.main },
+  { label: "No conforme", value: stats.nonConformingControls, color: theme.palette.error.main },
+  { label: "No aplica", value: stats.notApplicableControls, color: theme.palette.info.main },
+];
+
+const PieChartWithCustomizedLabel = ({ data }) => {
+  const TOTAL = data.reduce((sum, item) => sum + item.value, 0);
+  const getArcLabel = (params) => `${((params.value / TOTAL) * 100).toFixed(0)}%`;
 
   return (
-    <div className="report-container">
-      <Paper elevation={3} className="report-paper">
-        <div className="report-header">
-          <Typography variant="h4" gutterBottom>
-            Reporte de Auditoría ISO
-          </Typography>
-
-          <Grid2 container spacing={4}>
-            <Grid2 item xs={12} md={6}>
-              <CompanyInfoCard companyData={company} />
-            </Grid2>
-            <Grid2 item xs={12} md={6}>
-              <AuditorInfoCard auditorData={auditor} />
-            </Grid2>
-          </Grid2>
-        </div>
-
-        <div className="report-results">
-          <Typography variant="h5" gutterBottom className="section-title">
-            Resultados por Dominio
-          </Typography>
-          
-          <Grid2 container spacing={4}>
-            {domains.map((domain, index) => (
-              <Grid2 item xs={12} md={6} key={index}>
-                <DomainResultCard domain={domain} />
-              </Grid2>
-            ))}
-          </Grid2>
-
-          <TotalResultsCard
-            totalYes={totalYes}
-            totalNo={totalNo}
-            totalYesPercentage={totalYesPercentage}
-            totalNoPercentage={totalNoPercentage}
-          />
-        </div>
-
-        <FinalObservations
-          finalObservations={finalObservations}
-          setFinalObservations={setFinalObservations}
-        />
-
-        <div className="send-button-container">
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={<Mail />}
-            onClick={handleSendEmail}
-            size="large"
-          >
-            Enviar por correo electrónico
-          </Button>
-        </div>
-      </Paper>
-    </div>
+    <PieChart
+      series={[{ outerRadius: 80, data, arcLabel: getArcLabel }]}
+      sx={{
+        minWidth: 500,
+        [`& .${pieArcLabelClasses.root}`]: {
+          fill: "white",
+          fontSize: 14,
+        },
+      }}
+      width={500}
+      height={300}
+    />
   );
 };
 
-export default Reports;
+const SectionCard = ({ title, children }) => {
+  const theme = useTheme();
+  return (
+    <Card sx={{
+      display: "flex",
+      flexDirection: "column",
+      height: "100%",
+      color: theme.palette.primary.contrastText,
+      mb: theme.spacing(2),
+      boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)"
+    }}>
+      <CardContent>
+        <Typography variant="h6" color="primary">{title}</Typography>
+        {children}
+      </CardContent>
+    </Card>
+  );
+};
+
+const CompanyInfo = ({ company }) => {
+  const theme = useTheme();
+  return (
+    <SectionCard title="Información de la Compañía">
+      <Typography sx={{ mb: theme.spacing(1) }}>Nombre: {company.name}</Typography>
+      <Typography sx={{ mb: theme.spacing(1) }}>NIT: {company.nit}</Typography>
+      <Typography sx={{ mb: theme.spacing(1) }}>Dirección: {company.address}</Typography>
+      <Typography sx={{ mb: theme.spacing(1) }}>Email: {company.contactEmail}</Typography>
+      <Typography>Teléfono: {company.contactPhone}</Typography>
+    </SectionCard>
+  );
+};
+
+const AuditorInfo = ({ auditor }) => {
+  const theme = useTheme();
+  return (
+    <SectionCard title="Información del Auditor">
+      <Typography sx={{ mb: theme.spacing(1) }}>Nombre: {`${auditor.name} ${auditor.lastname}`}</Typography>
+      <Typography sx={{ mb: theme.spacing(1) }}>Documento de Identidad: {auditor.identityDocument}</Typography>
+      <Typography sx={{ mb: theme.spacing(1) }}>Email: {auditor.email}</Typography>
+      <Typography>Teléfono: {auditor.phone}</Typography>
+    </SectionCard>
+  );
+};
+
+const ObjectiveAndComments = ({ objective, comment }) => {
+  const theme = useTheme();
+  return (
+    <Box my={theme.spacing(4)}>
+      <Card sx={{
+        display: "flex",
+        flexDirection: "column",
+        color: theme.palette.primary.contrastText,
+        boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)"
+      }}>
+        <CardContent>
+          <Typography variant="h6" color="primary">Alcance de la Auditoría</Typography>
+          <Typography>ISO 27001 del 2022</Typography>
+          <Typography my={theme.spacing(4)} variant="h6" color="primary">Objetivo de la Auditoría</Typography>
+          <Typography>{objective}</Typography>
+          <Typography my={theme.spacing(4)} variant="h6" color="primary">Comentarios</Typography>
+          <Typography>{comment}</Typography>
+        </CardContent>
+      </Card>
+    </Box>
+  );
+};
+
+const DomainStatistics = ({ domain }) => {
+  const theme = useTheme();
+  return (
+    <Box my={theme.spacing(2)}>
+      <Typography variant="subtitle1" color="primary">Estadísticas del Dominio:</Typography>
+      <Typography>Controles Conformes: {domain.domainStatistic.conformingControls}</Typography>
+      <Typography>Controles No Conformes: {domain.domainStatistic.nonConformingControls}</Typography>
+      <Typography>Controles No Aplicables: {domain.domainStatistic.notApplicableControls}</Typography>
+    </Box>
+  );
+};
+
+const DomainSection = ({ domain }) => {
+  const theme = useTheme();
+  return (
+    <Paper elevation={3} sx={{ p: theme.spacing(4), my: theme.spacing(4)}}>
+      <Typography variant="h5" color="primary">{domain.name}</Typography>
+      <Typography variant="body2" color="textSecondary">{domain.description}</Typography>
+      <DomainStatistics domain={domain} />
+      <Box display="flex" flexWrap="wrap" gap={theme.spacing(4)}>
+        {domain.controls.map((control) => (
+          <Box key={control.id} flex={1} minWidth={400} maxWidth={600}>
+            <ControlCard domainIndex={domain.index} control={control} outcomeData={getOutcomeText(control.answer.outcome, theme)} />
+          </Box>
+        ))}
+      </Box>
+    </Paper>
+  );
+};
+
+const Report = ({ report }) => {
+  const theme = useTheme();
+
+  return (
+    <Box container spacing={theme.spacing(4)}>
+      <Box display="flex" flexDirection="column" justifyContent="center" mb={theme.spacing(2)}>
+        <Typography variant="h4" color="primary" align="center">Información de Auditoría</Typography>
+        <Box display="flex" justifyContent="space-between" my={theme.spacing(1)}>
+          <Typography fontSize={18}>Fecha de inicio: {formatDate(report.startedAt)}</Typography>
+          <Typography fontSize={18}>Fecha de finalización: {formatDate(report.endedAt)}</Typography>
+        </Box>
+      </Box>
+
+      <Box display="flex" justifyContent="space-between" flexWrap="wrap" gap={theme.spacing(4)} my={theme.spacing(4)}>
+        <Box flex={1} minWidth={300}><CompanyInfo company={report.company} /></Box>
+        <Box flex={1} minWidth={300}><AuditorInfo auditor={report.auditor} /></Box>
+      </Box>
+
+      <ObjectiveAndComments objective={report.objective} comment={report.comment} />
+
+      <Box my={theme.spacing(4)}>
+        <SectionCard title="Resumen de Auditoría">
+          <PieChartWithCustomizedLabel data={getAuditPieData(report.auditStatistic, theme)} />
+        </SectionCard>
+        <Box display="flex" flexDirection="row" flexWrap="wrap" gap={theme.spacing(2)} mt={theme.spacing(4)}>
+          {report.domains.map((domain) => (
+            <Box key={domain.id} flex={1} minWidth={500}>
+              <SectionCard title={domain.name}>
+                <PieChartWithCustomizedLabel data={getAuditPieData(domain.domainStatistic, theme)} />
+              </SectionCard>
+            </Box>
+          ))}
+        </Box>
+      </Box>
+
+      <Box my={theme.spacing(4)}>
+        {report.domains.map((domain) => <DomainSection key={domain.id} domain={domain} />)}
+      </Box>
+    </Box>
+  );
+};
+
+export default Report;

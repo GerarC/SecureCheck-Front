@@ -137,6 +137,7 @@ const ControlTable = ({
 							</TableCell>
 							<TableCell>
 								<TextField
+									required
 									variant="outlined"
 									placeholder="Comentarios"
 									defaultValue={control.answer.comment}
@@ -153,7 +154,7 @@ const ControlTable = ({
 								/>
 							</TableCell>
 						</TableRow>
-					)): (<></>)}
+					)) : (<></>)}
 				</TableBody>
 			</Table>
 		</TableContainer>
