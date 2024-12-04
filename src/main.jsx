@@ -6,11 +6,12 @@ import "./styles/index.scss";
 import { SnackbarProvider } from "notistack";
 import { ThemeProvider } from "@emotion/react";
 import { StyledMaterialDesignContent, theme } from "./styles/theme";
+import { ROUTER_BASE_NAME } from "./utils/constants/router-constants";
 
 createRoot(document.getElementById("root")).render(
     <StrictMode>
         <ThemeProvider theme={theme}>
-            <BrowserRouter>
+            <BrowserRouter basename={ROUTER_BASE_NAME}>
                 <SnackbarProvider
                     preventDuplicate
                     maxSnack={6}
