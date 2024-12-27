@@ -1,9 +1,11 @@
+import { userLocalService } from "@localStorage/authenticated-user.local-service"
 import axios from "axios"
 
 const API_URL = import.meta.env.VITE_API_URL
 
 const defaultHeaders = () => {
-    const token = localStorage.getItem("token")
+    const token = userLocalService.getItem()?.token
+
     return {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

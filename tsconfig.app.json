@@ -1,5 +1,21 @@
 {
   "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+        "@api/*": ["./services/api/*"],
+        "@localStorage/*": ["./services/localstorage/*"],
+        "@atoms/*": ["./ui/atoms/*"],
+        "@molecules/*": ["./ui/molecules/*"],
+        "@organisms/*": ["./ui/organisms/*"],
+        "@templates/*": ["./ui/templates/*"],
+        "@pages/*": ["./ui/pages/*"],
+        "@model/*": ["./model/*"],
+        "@assets/*": ["./assets/*"],
+        "@constants/*": ["./utils/constants/*"],
+        "@typing/*": ["./utils/types/*"]
+    },
+    "composite": true,
+    "noEmit": false,
     "target": "ES2020",
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],

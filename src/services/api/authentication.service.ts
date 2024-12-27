@@ -1,12 +1,9 @@
-import { LoginResponse, LoginRequest, RegisterResponse } from "../model/login"
-import { AuditorRequest } from "../model/request"
+import { AuditorRequest } from "@model/auditor"
+import { LoginRequest, LoginResponse, RegisterResponse } from "@model/authentication"
+import { AUTH_PATH, LOGIN_PATH, REGISTER_AUDITOR_PATH } from "@constants/api.constants"
 import axios from "axios"
 
 const API_URL = import.meta.env.VITE_API_URL
-
-const AUTH_PATH = "auth"
-const REGISTER_AUDITOR_PATH = "register/auditor"
-const LOGIN_PATH = "login"
 
 const service = axios.create({ baseURL: `${API_URL}/${AUTH_PATH}` })
 

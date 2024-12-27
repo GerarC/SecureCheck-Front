@@ -7,3 +7,9 @@ export interface AuditorRequest {
     email: string
     password: string
 }
+
+export interface AuditorResponse {
+	id: string
+	name: string
+	lastname: string
+}
